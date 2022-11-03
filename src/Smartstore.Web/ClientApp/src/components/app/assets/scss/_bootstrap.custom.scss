@@ -1,0 +1,38 @@
+/// <reference path="../_variables.scss" />
+
+.p-10 {
+    padding: 2.5rem !important;
+}
+.mb-3 {
+    margin-bottom: 0.75rem !important;
+}
+.mb-10 {
+    margin-bottom: 2.5rem !important;
+}
+.mb-12 {
+    margin-bottom: 3rem !important;
+}
+
+@media (min-width: 992px) {
+    .pb-lg-20 {
+        padding-bottom: 5rem !important;
+    }
+    .w-lg-500px {
+        width: 500px !important;
+    }
+    .p-lg-15 {
+        padding: 3.75rem !important;
+    }
+}
+
+.fs-4 {
+    font-size: 1.25rem !important;
+}
+.fw-bold {
+    font-weight: 500 !important;
+}
+
+.flex-stack {
+    justify-content: space-between;
+    align-items: center;
+}

@@ -1,0 +1,64 @@
+.app-message {
+    width: 300px;
+    margin: auto;
+    padding-bottom: 10px;
+    display: flex;
+}
+
+.app-message-content {
+    width: 100%;
+    display: flex;
+
+    &.sent {
+        justify-content: flex-end;
+    }
+}
+
+.app-message-content.sent .app-message-avatar {
+    display: none;
+}
+
+.app-message-avatar {
+    background-image: url(https://d13yacurqjgara.cloudfront.net/assets/avatar-default-aa2eab7684294781f93bc99ad394a0eb3249c5768c21390163c9f55ea8ef83a4.gif);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 50%;
+    align-self: center;
+    margin-right: 15px;
+}
+
+.app-message-text {
+    padding: 17px 20px;
+    border-radius: 6px;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    -webkit-font-smoothing: subpixel-antialiased
+}
+
+.app-message-content.sent .app-message-text {
+    color: white;
+    background-color: #4e8cff;
+    max-width: calc(100% - 120px);
+    word-wrap: break-word;
+}
+
+.app-message-content.received .app-message-text {
+    color: #263238;
+    background-color: #f4f7f9;
+    margin-right: 40px;
+}
+
+.app-message-emoji {
+    font-size: 40px;
+}
+
+@media (max-width: 450px) {
+    .app-message {
+        width: 80%;
+    }
+}

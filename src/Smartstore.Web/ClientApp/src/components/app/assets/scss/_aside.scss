@@ -1,0 +1,93 @@
+.app-sidebar {
+    background-color: var(--app-sidebar-base-bg-color);
+    transition: width 0.3s ease;
+    border-right: 1px solid var(--border-color);
+
+    .aside-logo {
+        border-bottom: 1px dashed var(--border-color);
+    }
+
+    .app-sidebar-menu {
+        .menu-item {
+            padding-bottom: 10px;
+
+            .menu-link {
+                border-radius: 8px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                padding: 0;
+                flex: 0 0 100%;
+                padding: 0.65rem 1rem;
+                transition: none;
+                outline: none !important;
+                justify-content: center;
+                color: var(--app-sidebar-menu-icon-color);
+
+                &:hover {
+                    background: var(--app-sidebar-menu-icon-hover-bg);
+                }
+
+                &.active {
+                    background: var(--app-sidebar-menu-icon-active-bg);
+                    color: var(--app-sidebar-menu-icon-actie-color);
+                }
+
+                .menu-icon {
+                    flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 2rem;
+                }
+            }
+        }
+    }
+
+    .aside-footer {
+        .menu-item {
+            .menu-link {
+                border-radius: 8px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                padding: 0;
+                flex: 0 0 100%;
+                padding: 0.65rem 1rem;
+                transition: none;
+                outline: none !important;
+                justify-content: center;
+                color: var(--app-sidebar-menu-icon-color);
+
+                &:hover {
+                    background: var(--app-sidebar-menu-icon-hover-bg);
+                }
+
+                &.active {
+                    background: var(--app-sidebar-menu-icon-active-bg);
+                    color: var(--app-sidebar-menu-icon-actie-color);
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .app-sidebar {
+        display: flex;
+        flex-shrink: 0;
+        width: var(--app-sidebar-width);
+        box-shadow: var(--app-sidebar-base-box-shadow);
+        position: fixed;
+        z-index: 105;
+    }
+
+    .aside-logo {
+        height: var(--app-header-height);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        flex-shrink: 0;
+    }
+}

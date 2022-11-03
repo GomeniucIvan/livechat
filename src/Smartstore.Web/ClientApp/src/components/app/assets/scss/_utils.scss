@@ -1,0 +1,50 @@
+.rounded {
+    border-radius: 0.475rem !important;
+}
+.shadow-sm {
+    box-shadow: 0 .1rem 1rem .25rem rgba(0,0,0,.05) !important;
+}
+.text-dark {
+    color: #181c32 !important;
+}
+.text-gray-400 {
+    color: #b5b5c3 !important;
+}
+.link-primary {
+    color: #009ef7;
+}
+.column, .columns {
+    flex: 1 1;
+    padding-right: 0;
+    padding-left: 0;
+    min-width: 0;
+}
+
+@media print, screen and (min-width: 40em) {
+    .column, .columns {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+@media (min-width: 992px) {
+    .hover-scroll-overlay-y:hover {
+        overflow-y: overlay;
+    }
+}
+
+.__react_component_tooltip {
+    padding: 4px !important;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label:not(.form-check-label):not(.custom-control-label) {
+    font-weight: 600;
+}
+
+.hide {
+    display: none;
+}

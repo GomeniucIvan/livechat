@@ -1,0 +1,44 @@
+:root {
+    --bs-btn-color: #FFFFFF !important;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 15px !important;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+    --fc-event-border-color: #009EF7;
+    --fc-event-bg-color: #009EF7;
+    --fc-event-text-color: #FFFFFF;
+    --bg-color: 255,255,255;
+    --bs-bg-opacity: 1;
+    display: flex;
+    flex-direction: column;
+    color: #181c32;
+    background-color: rgba(var(--bs-body-bg-rgb),var(--bs-bg-opacity)) !important;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: #181c32;
+}
+
+.h1, h1 {
+    font-size: calc(1.3rem + .6vw);
+}
+
+@media (min-width: 1200px) {
+    .h1, h1 {
+        font-size: 1.75rem;
+    }
+}

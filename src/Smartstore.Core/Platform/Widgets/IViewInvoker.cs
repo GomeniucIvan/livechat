@@ -1,0 +1,28 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
+namespace Smartstore.Core.Widgets
+{
+    /// <summary>
+    /// Invokes and renders (partial) views and components outside of controllers.
+    /// </summary>
+    public interface IViewInvoker
+    {
+        ViewDataDictionary ViewData { get; }
+
+        /// <summary>
+        /// Invokes a view and writes its html content to given <paramref name="writer"/>.
+        /// </summary>
+        Task InvokeViewAsync(ActionContext context, ViewResult result, TextWriter writer);
+
+        /// <summary>
+        /// Invokes a partial view and writes its html content to given <paramref name="writer"/>.
+        /// </summary>
+        Task InvokePartialViewAsync(ActionContext context, PartialViewResult result, TextWriter writer);
+
+        /// <summary>
+        /// Invokes a view component and writes its html content to given <paramref name="writer"/>.
+        /// </summary>
+        Task InvokeComponentAsync(ActionContext context, ViewComponentResult result, TextWriter writer);
+    }
+}

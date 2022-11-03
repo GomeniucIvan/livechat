@@ -1,0 +1,114 @@
+.app-customer-input {
+    min-height: 55px;
+    margin: 0px;
+    position: relative;
+    bottom: 0;
+    display: flex;
+    background-color: #f4f7f9;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: background-color .2s ease,box-shadow .2s ease;
+}
+
+
+.app-customer-input-text {
+    width: 300px;
+    resize: none;
+    border: none;
+    outline: none;
+    border-bottom-left-radius: 10px;
+    box-sizing: border-box;
+    padding: 18px;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.33;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #565867;
+    -webkit-font-smoothing: antialiased;
+    max-height: 200px;
+    overflow: scroll;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.app-customer-input-text:empty:before {
+    content: attr(placeholder);
+    display: block; /* For Firefox */
+    color: rgba(86, 88, 103, 0.3);
+    outline: none;
+}
+
+.app-customer-input-buttons {
+    width: 100px;
+    position: absolute;
+    right: 30px;
+    height: 100%;
+    display: flex;
+}
+
+.app-customer-input-button:first-of-type {
+    width: 40px;
+}
+
+.app-customer-input-button {
+    width: 30px;
+    height: 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.app-customer-input.active {
+    box-shadow: none;
+    background-color: white;
+    box-shadow: 0px -5px 20px 0px rgba(150, 165, 190, 0.2);
+}
+
+.app-customer-input-send-icon {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    align-self: center;
+    outline: none;
+}
+
+.app-customer-input-send-icon path {
+    fill: rgba(86, 88, 103, 0.3);
+}
+
+.app-customer-input-send-icon:hover path {
+    fill: rgba(86, 88, 103, 1);
+}
+
+.app-customer-input-emoji-icon-wrapper,
+.app-customer-input-send-icon-wrapper {
+    background: none;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.app-customer-input-emoji-icon-wrapper:focus {
+    outline: none;
+}
+
+.app-customer-input-emoji-icon {
+    height: 18px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.app-customer-input-emoji-icon path, .app-customer-input-emoji-icon circle {
+    fill: rgba(86, 88, 103, 0.3);
+}
+
+.app-customer-input-emoji-icon-wrapper:focus .app-customer-input-emoji-icon path,
+.app-customer-input-emoji-icon-wrapper:focus .app-customer-input-emoji-icon circle,
+.app-customer-input-emoji-icon.active path,
+.app-customer-input-emoji-icon.active circle,
+.app-customer-input-emoji-icon:hover path,
+.app-customer-input-emoji-icon:hover circle {
+    fill: rgba(86, 88, 103, 1);
+}
