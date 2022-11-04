@@ -187,11 +187,7 @@ logs/
 
 *-sym.*
 *-symdir/
-[Ee]xternal[Ff]iles/
-/src/Smartstore.Modules/*-sym
-/test/*-sym
-/src/Smartstore.Web/Themes/*-sym
-/src/Smartstore.Web/Themes/HP
+[Ee]xternal[Ff]iles/P
 
 
 # =========================
@@ -209,32 +205,12 @@ Kopie von*
 
 build/artifacts
 build/packages
-src/Smartstore.Web/Modules/*
-src/Smartstore.Web/App_Data/*
-!src/Smartstore.Web/App_Data/EmailTemplates/*
-!src/Smartstore.Web/App_Data/Geo/*
-!src/Smartstore.Web/App_Data/Localization/*
-!src/Smartstore.Web/App_Data/Samples/*
-!src/Smartstore.Web/App_Data/icons.json
-!src/Smartstore.Web/App_Data/widgetzones.json
 
 # DataProtection
 DataProtection-Keys/
 
-# Import/Export
-src/Smartstore.Web/wwwroot/[Ee]xchange/*
-
 # User settings
 src/Smartstore.Web/Config/usersettings*
 
-# Tools
-src/Tools/Smartstore.WebApi.Client/packages
-src/Tools/Smartstore.WebApi.Client/Smartstore.WebApi.Client.sln
-
 src/Smartstore.Packager.sln
 Log.txt
-src/Smartstore.Web/Themes/FlexMuseo/
-/src/Smartstore.Web/wwwroot/admin/theme.min.css
-/src/Smartstore.Web/wwwroot/admin/theme.css
-/src/Smartstore.Web/wwwroot/public/theme-public.min.css
-/src/Smartstore.Web/wwwroot/public/theme-public.css

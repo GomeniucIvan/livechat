@@ -77,14 +77,6 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="wwwroot\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="App_Data\Installation\SqlServer.StoredProcedures.sql" />
-	</ItemGroup>
-
 	<PropertyGroup>
 		<!--Set this parameter to true to get the dlls copied from the NuGet cache to the output of your project-->
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
