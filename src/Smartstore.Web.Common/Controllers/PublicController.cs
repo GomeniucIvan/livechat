@@ -1,4 +1,6 @@
-﻿using Smartstore.Core.Companies.Proc;
+﻿using Smartstore.Core.Companies.Dtos;
+using Smartstore.Core.Companies.Proc;
+using System.Linq;
 
 namespace Smartstore.Web.Controllers
 {
@@ -12,20 +14,43 @@ namespace Smartstore.Web.Controllers
 
     public class ApiPublicController : SmartController
     {
-        protected StoredCompanyData LauncherHeaderData()
+        protected StoredCompanyDataDto LauncherHeaderData()
         {
             var httpContext = HttpContext;
             var httpRequest = httpContext.Request;
-            var companyCustomerIdSet = httpRequest.Headers.TryGetValue("CompanyCustomerId", out var companyCustomerId);
+            var guestUniqueIdSet = httpRequest.Headers.TryGetValue("GuestUniqueId", out var guestUniqueId);
+            var guestGuidIdSet = httpRequest.Headers.TryGetValue("GuestGuid", out var guestGuid);
+            var companyIdSet = httpRequest.Headers.TryGetValue("CompanyId", out var companyIdString);
             var companyHashSet = httpRequest.Headers.TryGetValue("CompanyHash", out var companyHash);
-            var encodeHashSet = httpRequest.Headers.TryGetValue("EncodeHash", out var encodeHash);
 
-            return new StoredCompanyData()
+            if (companyIdSet && companyHashSet)
             {
-                CompanyCustomerId = companyCustomerIdSet ? companyCustomerId : string.Empty,
-                CompanyHash = companyHashSet ? companyHash : string.Empty,
-                EncodeHash = encodeHashSet ? encodeHash : string.Empty
-            };
+                var companyIdIsValid = int.TryParse(companyIdString, out int companyId);
+                if (companyIdIsValid && companyId > 0)
+                {
+                    var company = Db.Company_GetDetails(companyId: companyId);
+                    if (company != null)
+                    {
+                        if (string.Equals(companyHash, company.Hash, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            var companyGuest = Db.CompanyGuestCustomer_CreateAndOrGetDetails(companyId: company.Id,
+                                uniqueId: guestUniqueId,
+                                guid: guestGuid);
+
+                            if (companyGuest != null)
+                            {
+                                return new StoredCompanyDataDto()
+                                {
+                                    CompanyGuestCompany = companyGuest,
+                                    Company = company,
+                                };  
+                            }
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

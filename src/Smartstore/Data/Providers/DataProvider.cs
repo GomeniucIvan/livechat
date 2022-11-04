@@ -1,4 +1,5 @@
-﻿using System.Data.Common;
+﻿using System.Data;
+using System.Data.Common;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -491,8 +492,109 @@ namespace Smartstore.Data.Providers
 
             var p = CreateParameter();
             p.ParameterName = name;
-            p.Value = value;
+            p.Value = value ?? DBNull.Value;
 
+            return p;
+        }
+
+        public DbParameter CreateIntParameter(string name, object value)
+        {
+            Guard.NotEmpty(name, nameof(name));
+
+            var p = CreateParameter();
+            p.ParameterName = name;
+            p.Value = value ?? DBNull.Value;
+            p.DbType = DbType.Int32;
+
+            return p;
+        }
+
+        public DbParameter CreateBooleanParameter(string name, object value)
+        {
+            Guard.NotEmpty(name, nameof(name));
+
+            var p = CreateParameter();
+            p.ParameterName = name;
+            p.Value = value ?? DBNull.Value;
+            p.DbType = DbType.Boolean;
+
+            return p;
+        }
+
+                /// <summary>
+        /// Get datetime parameter
+        /// </summary>
+        /// <param name="name">Parameter name</param>
+        /// <param name="value">Value</param>
+        /// <returns>Parameter</returns>
+        public DbParameter CreateDateTimeParameter(string name, object value)
+        {
+            Guard.NotEmpty(name, nameof(name));
+
+            var p = CreateParameter();
+            p.ParameterName = name;
+            p.Value = value ?? DBNull.Value;
+            p.DbType = DbType.DateTime;
+
+            return p;
+        }
+
+        /// <summary>
+        /// Get int32 parameter
+        /// </summary>
+        /// <param name="parameterName">Parameter name</param>
+        /// <param name="pageIndex">Page index value</param>
+        /// <returns>Parameter</returns>
+        public DbParameter CreatePageIndexParameter(string parameterName, int? pageIndex)
+        {
+            var p = CreateParameter();
+            p.ParameterName = parameterName;
+            p.DbType = DbType.Int32;
+            p.Value = pageIndex.HasValue && pageIndex.GetValueOrDefault(0) > 0 ? pageIndex.Value : 1;
+            return p;
+        }
+
+        /// <summary>
+        /// Get int32 parameter
+        /// </summary>
+        /// <param name="parameterName">Parameter name</param>
+        /// <param name="pageSize">Page size value</param>
+        /// <returns>Parameter</returns>
+        public DbParameter CreatePageSizeParameter(string parameterName, int? pageSize)
+        {
+            var p = CreateParameter();
+            p.ParameterName = parameterName;
+            p.DbType = DbType.Int32;
+            p.Value = pageSize.HasValue && pageSize.GetValueOrDefault(0) > 0 && pageSize < 2147483647 ? pageSize.Value : 2147483646;
+            return p;
+        }
+
+        /// <summary>
+        /// Get output int32 parameter
+        /// </summary>
+        /// <param name="parameterName">Parameter name</param>
+        /// <returns>Parameter</returns>
+        public DbParameter GetOutputInt32Parameter(string parameterName)
+        {
+            var p = CreateParameter();
+            p.ParameterName = parameterName;
+            p.DbType = DbType.Int32;
+            p.Direction = ParameterDirection.Output;
+            return p;
+        }
+
+        /// <summary>
+        /// Get output int32 parameter
+        /// </summary>
+        /// <param name="parameterName">Parameter name</param>
+        /// <returns>Parameter</returns>
+        public DbParameter GetOutputStringParameter(string parameterName)
+        {
+            var p = CreateParameter();
+            p.ParameterName = parameterName;
+            p.DbType = DbType.String;
+            p.Size = int.MaxValue - 1;
+            p.Direction = ParameterDirection.Output;
             return p;
         }
 

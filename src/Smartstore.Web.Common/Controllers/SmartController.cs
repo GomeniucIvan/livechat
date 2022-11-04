@@ -23,6 +23,11 @@ namespace Smartstore.Web.Controllers
             get => HttpContext.RequestServices.GetService<IViewInvoker>();
         }
 
+        public SmartDbContext Db
+        {
+            get => HttpContext.RequestServices.GetService<SmartDbContext>();
+        }
+
         #region Widget, View & Component rendering
 
         /// <inheritdoc cref="IViewInvoker.InvokeViewAsync(string, string, ViewDataDictionary)"/>

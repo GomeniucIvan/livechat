@@ -58,6 +58,9 @@
 		<None Include="App_Data\Localization\**" CopyToPublishDirectory="PreserveNewest" />
 		<None Include="App_Data\Samples\**" CopyToPublishDirectory="PreserveNewest" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Include="App_Data\Installation\SqlServer.StoredProcedures.sql" />
+	</ItemGroup>
 
 	<!-- Copy publishable files in Areas directory -->
 

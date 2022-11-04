@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Smartstore.Core.Companies.Proc;
+﻿using Smartstore.Core.Companies.Proc;
 using Smartstore.Core.Data;
 using Smartstore.Core.Localization.Routing;
-using Smartstore.Core.Security;
 using Smartstore.Web.Models.Laucher;
 using Smartstore.Web.Models.System;
 
@@ -37,11 +35,10 @@ namespace Smartstore.Web.Controllers
             {
                 var headerData = LauncherHeaderData();
 
-                var responseBool = _db.CompanyUserMessage_Insert(new CompanyUserMessageDto()
-                {
-                    Message = model.Message,
-                    CustomerUserId = headerData.CompanyCustomerId
-                });
+                //var responseBool = _db.CompanyUserMessage_Insert(new CompanyCustomerMessageDto()
+                //{
+                //    Message = model.Message,
+                //});
             }
 
             resultModel.IsValid = false;

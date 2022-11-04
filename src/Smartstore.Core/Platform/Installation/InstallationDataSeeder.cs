@@ -187,15 +187,21 @@ namespace Smartstore.Core.Installation
             customer.CustomerRoleMappings.Add(new CustomerRoleMapping { CustomerId = customer.Id, CustomerRoleId = guestRole.Id });
             await SaveAsync(customer);
 
-            //company
+            var encryptor = new Encryptor(new SecuritySettings());
+            var saltKey = encryptor.CreateSaltKey(5);
+
+            // Company
             var company = new Company()
             {
-                Name = defaultUserEmail
+                Name = defaultUserEmail,
+                HashSalt = saltKey,
+                CreatedOnUtc = DateTime.UtcNow,
+                Hash = encryptor.CreatePasswordHash("1", saltKey, new CustomerSettings().HashedPasswordFormat) //TODO change and pass id
             };
             await SaveAsync(company);
 
             //admin company
-            var customerCompany = new CustomerCompany()
+            var customerCompany = new CompanyCustomer()
             {
                 CompanyId = company.Id,
                 CustomerId = adminUser.Id

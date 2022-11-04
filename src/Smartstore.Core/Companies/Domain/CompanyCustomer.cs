@@ -1,38 +1,51 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Smartstore.Core.Identity;
 
 namespace Smartstore.Core.Companies.Domain
 {
-    public class CompanyUserMessage : BaseEntity
+    internal class CompanyCustomerMap : IEntityTypeConfiguration<CompanyCustomer>
     {
-        public CompanyUserMessage()
+        public void Configure(EntityTypeBuilder<CompanyCustomer> builder)
+        {
+            // Globally exclude soft-deleted entities from all queries.
+            builder.HasQueryFilter(c => !c.Deleted);
+        }
+    }
+
+    public partial class CompanyCustomer : BaseEntity, ISoftDeletable
+    {
+        public CompanyCustomer()
         {
         }
 
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private member.", Justification = "Required for EF lazy loading")]
-        private CompanyUserMessage(ILazyLoader lazyLoader)
+        private CompanyCustomer(ILazyLoader lazyLoader)
             : base(lazyLoader)
         {
         }
 
-        public string Message { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether the company user has been deleted
+        /// </summary>
+        public bool Deleted { get; set; }
 
         /// <summary>
         /// Gets or sets the customer identifier.
         /// </summary>
         public int CustomerId { get; set; }
 
-        private Customer _customer;
+        private Customer _customerId;
         /// <summary>
         /// Gets or sets the customer record.
         /// </summary>
         [ForeignKey(nameof(CustomerId))]
         public Customer Customer
         {
-            get => _customer ?? LazyLoader.Load(this, ref _customer);
-            set => _customer = value;
+            get => _customerId ?? LazyLoader.Load(this, ref _customerId);
+            set => _customerId = value;
         }
 
         /// <summary>

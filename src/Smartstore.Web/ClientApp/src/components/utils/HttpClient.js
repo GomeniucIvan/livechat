@@ -1,7 +1,11 @@
 import $ from 'jquery'
-var companyHash = "asd";
-var customerId = "1";
-var encodeHash = "2";
+
+//TODO script SETTINGS
+var guestUniqueId = "1";
+var guestGuid = "";
+var companyId = "1";
+var companyHash = "AB9D4D56C7374078E35F8AFFA1F7D80B829429CB";
+
 
 const LauncherUrl = 'https://localhost:44442';
 
@@ -51,9 +55,10 @@ export const postLauncher = async (url, object) => {
         headers: {
             "Content-Type": "application/json",
             'X-XSRF-Token': encodeURIComponent(token),
-            'CompanyCustomerId': customerId,
+            'GuestUniqueId': guestUniqueId,
+            'GuestGuid': guestGuid,
             'CompanyHash': companyHash,
-            'EncodeHash': encodeHash
+            'CompanyId': companyId,
         },
         credentials: 'include',
         body: JSON.stringify(object)
