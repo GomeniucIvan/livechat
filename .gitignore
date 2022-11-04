@@ -214,3 +214,4 @@ src/Smartstore.Web/Config/usersettings*
 
 src/Smartstore.Packager.sln
 Log.txt
+/src/Smartstore.Web/App_Data/Tenants/
