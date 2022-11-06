@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using Newtonsoft.Json;
 
 namespace Smartstore.Core.Companies.Domain
 {
@@ -11,6 +13,11 @@ namespace Smartstore.Core.Companies.Domain
         {
             // Globally exclude soft-deleted entities from all queries.
             builder.HasQueryFilter(c => !c.Deleted);
+
+            builder.HasOne(c => c.Company)
+                .WithMany(c => c.CompanyGuestCustomers)
+                .HasForeignKey(c => c.CompanyId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 
@@ -30,6 +37,7 @@ namespace Smartstore.Core.Companies.Domain
         /// <summary>
         /// Gets or sets the Guid
         /// </summary>
+        [Required] 
         public Guid Guid { get; set; } = Guid.NewGuid();
 
         public string CompanyUniqueId { get; set; }
@@ -42,6 +50,7 @@ namespace Smartstore.Core.Companies.Domain
         /// <summary>
         /// Gets or sets the company identifier.
         /// </summary>
+        [Required]
         public int CompanyId { get; set; }
 
         private Company _company;
@@ -49,6 +58,7 @@ namespace Smartstore.Core.Companies.Domain
         /// Gets or sets the company record.
         /// </summary>
         [ForeignKey(nameof(CompanyId))]
+        [JsonIgnore]
         public Company Company
         {
             get => _company ?? LazyLoader.Load(this, ref _company);

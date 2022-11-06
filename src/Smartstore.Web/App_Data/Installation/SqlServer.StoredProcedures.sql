@@ -1,5 +1,5 @@
 CREATE PROCEDURE [dbo].[Company_GetDetails]
-     (@CompanyId int = NULL)
+     (@CompanyId INT)
 AS
 BEGIN
 
@@ -13,12 +13,23 @@ BEGIN
 END;
 GO
 
+GO
 CREATE PROCEDURE [dbo].[CompanyGuestCustomer_CreateAndOrGetDetails]
-     (@CompanyId int = NULL,
+     (@CompanyId int,
 	 @UniqueId nvarchar(MAX),
 	 @Guid nvarchar(36))
 AS
 BEGIN
 
+	IF EXISTS (SELECT 1 FROM dbo.CompanyGuestCustomer cgc WITH(NOLOCK)
+                                                                     WHERE cgc.CompanyId = @CompanyId 
+																	 AND cgc.Deleted = 0
+																	 AND  ((ISNULL(@UniqueId,'') != '' AND cgc.UniqueId = @UniqueId) OR 
+																			(ISNULL(@Guid,'') != '' AND cgc.Guid = @Guid))
+																	 BEGIN
+
+																	 END
+																	 ELSE 
+																	 END
 
 END;

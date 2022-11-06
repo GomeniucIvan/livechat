@@ -33,6 +33,7 @@ namespace Smartstore.Web.Controllers
                     {
                         if (string.Equals(companyHash, company.Hash, StringComparison.CurrentCultureIgnoreCase))
                         {
+                            //todo change to start ->
                             var companyGuest = Db.CompanyGuestCustomer_CreateAndOrGetDetails(companyId: company.Id,
                                 uniqueId: guestUniqueId,
                                 guid: guestGuid);

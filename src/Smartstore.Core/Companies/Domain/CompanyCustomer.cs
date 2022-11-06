@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 using Smartstore.Core.Identity;
 
 namespace Smartstore.Core.Companies.Domain
@@ -12,6 +15,11 @@ namespace Smartstore.Core.Companies.Domain
         {
             // Globally exclude soft-deleted entities from all queries.
             builder.HasQueryFilter(c => !c.Deleted);
+
+            builder.HasOne(c => c.Company)
+                .WithMany(c => c.CompanyCustomers)
+                .HasForeignKey(c => c.CompanyId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 
@@ -35,22 +43,26 @@ namespace Smartstore.Core.Companies.Domain
         /// <summary>
         /// Gets or sets the customer identifier.
         /// </summary>
+        [Required]
         public int CustomerId { get; set; }
 
-        private Customer _customerId;
-        /// <summary>
-        /// Gets or sets the customer record.
-        /// </summary>
-        [ForeignKey(nameof(CustomerId))]
-        public Customer Customer
-        {
-            get => _customerId ?? LazyLoader.Load(this, ref _customerId);
-            set => _customerId = value;
-        }
+        //todo
+        //private Customer _customerId;
+        ///// <summary>
+        ///// Gets or sets the customer record.
+        ///// </summary>
+        //[ForeignKey(nameof(CustomerId))]
+        //[JsonIgnore]
+        //public Customer Customer
+        //{
+        //    get => _customerId ?? LazyLoader.Load(this, ref _customerId);
+        //    set => _customerId = value;
+        //}
 
         /// <summary>
         /// Gets or sets the company identifier.
         /// </summary>
+        [Required]
         public int CompanyId { get; set; }
 
         private Company _company;
@@ -58,6 +70,7 @@ namespace Smartstore.Core.Companies.Domain
         /// Gets or sets the company record.
         /// </summary>
         [ForeignKey(nameof(CompanyId))]
+        [JsonIgnore]
         public Company Company
         {
             get => _company ?? LazyLoader.Load(this, ref _company);

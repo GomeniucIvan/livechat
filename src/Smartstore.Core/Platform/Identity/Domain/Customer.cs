@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Newtonsoft.Json;
 using Smartstore.Core.Common;
+using Smartstore.Core.Companies.Domain;
 
 namespace Smartstore.Core.Identity
 {
