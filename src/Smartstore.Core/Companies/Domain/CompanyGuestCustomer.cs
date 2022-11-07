@@ -40,7 +40,10 @@ namespace Smartstore.Core.Companies.Domain
         [Required] 
         public Guid Guid { get; set; } = Guid.NewGuid();
 
-        public string CompanyUniqueId { get; set; }
+        /// <summary>
+        /// Gets or sets company unique id param
+        /// </summary>
+        public string CustomerUniqueId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the guest has been deleted

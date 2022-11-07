@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Smartstore.Core.Identity;
 
 namespace Smartstore.Core.Companies.Domain
 {
@@ -22,7 +21,7 @@ namespace Smartstore.Core.Companies.Domain
         /// <summary>
         /// Gets or sets the company customer identifier.
         /// </summary>
-        public int CompanyCustomerId { get; set; }
+        public int? CompanyCustomerId { get; set; }
 
         private CompanyCustomer _companyCustomer;
         /// <summary>
@@ -38,7 +37,7 @@ namespace Smartstore.Core.Companies.Domain
         /// <summary>
         /// Gets or sets the company guest customer identifier.
         /// </summary>
-        public int CompanyGuestCustomerId { get; set; }
+        public int? CompanyGuestCustomerId { get; set; }
 
         private CompanyGuestCustomer _companyGuestCustomer;
         /// <summary>
@@ -66,5 +65,7 @@ namespace Smartstore.Core.Companies.Domain
             get => _company ?? LazyLoader.Load(this, ref _company);
             set => _company = value;
         }
+
+        public DateTime CreatedOnUtc { get; set; }
     }
 }

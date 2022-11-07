@@ -17,7 +17,6 @@ const UserInput = (props) => {
         const text = userInputRef.current.textContent;
         if (text && text.length > 0) {
             const model = {
-                Author: 'test',
                 Message: text,
                 Type: 'text'
             }

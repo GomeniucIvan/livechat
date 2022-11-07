@@ -1,4 +1,5 @@
-﻿using Smartstore.Core.Companies.Proc;
+﻿using Smartstore.Core.Companies.Dtos;
+using Smartstore.Core.Companies.Proc;
 using Smartstore.Core.Data;
 using Smartstore.Core.Localization.Routing;
 using Smartstore.Web.Models.Laucher;
@@ -27,22 +28,41 @@ namespace Smartstore.Web.Controllers
         #region Methods
 
         [HttpPost]
+        [LocalizedRoute("/api/launcher/messages")]
+        public async Task<IActionResult> Messages()
+        {
+            var headerData = LauncherHeaderData();
+
+            IList<CompanyMessageDto> messages = _db.CompanyMessage_GetList(companyId: headerData.Company.Id,
+                companyGuestCustomerId: headerData.CompanyGuestCompany.Id,
+                companyCustomerId: null).ToList();
+
+            return ApiJson(new GenericApiModel<IList<CompanyMessageDto>>().Success(messages));
+        }
+
+        [HttpPost]
         [LocalizedRoute("/api/launcher/sendText")]
         public async Task<IActionResult> SendText([FromBody]LauncherMessageModel model)
         {
-            var resultModel = new GenericApiModel<int>();
+            var resultModel = new GenericApiModel<int?>();
             if (model != null && !string.IsNullOrEmpty(model.Author))
             {
                 var headerData = LauncherHeaderData();
 
-                //var responseBool = _db.CompanyUserMessage_Insert(new CompanyCustomerMessageDto()
-                //{
-                //    Message = model.Message,
-                //});
+                var responseBool = _db.CompanyMessage_Insert(new CompanyMessageDto()
+                {
+                    Message = model.Message,
+                    CompanyGuestCustomerId = headerData.CompanyGuestCompany.Id,
+                    CompanyCustomerId = null,
+                    CompanyId = headerData.Company.Id
+                });
+
+                //todo generic proc response, created int
+                return ApiJson(resultModel.Success(null));
             }
 
             resultModel.IsValid = false;
-            return ApiJson(resultModel);
+            return ApiJson(resultModel.Error());
         } 
 
         #endregion

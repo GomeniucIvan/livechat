@@ -13,7 +13,7 @@
         public bool NotFound { get; set; }
         public T? Data { get; set; }
 
-        public GenericApiModel<T> Error(string errorMessage)
+        public GenericApiModel<T> Error(string errorMessage = "")
         {
             this.Message = errorMessage;
             this.IsValid = false;

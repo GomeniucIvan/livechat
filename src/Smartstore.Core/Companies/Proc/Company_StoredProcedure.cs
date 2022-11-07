@@ -5,7 +5,7 @@ using Smartstore.Core.Data.Bootstrapping;
 
 namespace Smartstore.Core.Companies.Proc;
 
-public static class Company_StoreProcedure
+public static class Company_StoredProcedure
 {
     public static CompanyDto Company_GetDetails(this SmartDbContext db,
         int companyId)
