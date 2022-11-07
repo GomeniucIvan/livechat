@@ -1,45 +1,43 @@
-import React, {Component} from 'react'
+import React, {useEffect, useState} from 'react'
 import messageHistory from './messageHistory';
 import TestArea from './TestArea';
 import Header from './Header';
 import Footer from './Footer';
 import monsterImgUrl from "./assets/monster.png";
-import { get } from "../utils/HttpClient";
+import { get, postLauncher } from "../utils/HttpClient";
 import './assets/styles'
 
-export default class Home extends Component {
-    constructor() {
-        super();
-        this.state = {
-            messageList: messageHistory,
-            newMessagesCount: 0,
-            isOpen: false,
-            model: {},
-            loading: false
-        };
+const Home = (props) => {
+    let [messageList, setMessageList] = useState([]);
+    let [newMessagesCount, setNewMessagesCount] = useState(0);
+    let [isOpen, setIsOpen] = useState(false);
+    let [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const PopulateComponent = async () => {
+
+            let response = await postLauncher(`/api/launcher/messages`);
+
+            if (response && response.IsValid) {
+                setMessageList(response.Data);
+            }
+
+            setLoading(false);
+        }
+        PopulateComponent();
+    });
+
+    const _onMessageWasSent = async (message) => {
+        let messages = [...messageList, message];
+        setNewMessagesCount(messages);
     }
 
-    async populateComponent() {
-        //const data = await get(`/api/home`);
-        //this.setState({ model: data, loading: false });
-    }
-
-    componentDidMount() {
-        this.populateComponent();
-    }
-
-    _onMessageWasSent(message) {
-        this.setState({
-            messageList: [...this.state.messageList, message]
-        })
-    }
-
-    _sendMessage(text) {
+    const _sendMessage = async (text) => {
         if (text.length > 0) {
-            const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
+            const newMessagesCount = isOpen ? newMessagesCount : newMessagesCount + 1
             this.setState({
                 newMessagesCount: newMessagesCount,
-                messageList: [...this.state.messageList, {
+                messageList: [...messageList, {
                     author: 'them',
                     type: 'text',
                     data: { text }
@@ -48,21 +46,19 @@ export default class Home extends Component {
         }
     }
 
-    _handleClick() {
-        this.setState({
-            isOpen: !this.state.isOpen,
-            newMessagesCount: 0
-        })
+    const _handleClick = async () => {
+        setIsOpen(true);
+        setNewMessagesCount(0);
     }
 
-    render() {
-        return <div>
+    return (
+        <div>
             <Header />
-            <TestArea
-                onMessage={this._sendMessage.bind(this)}
-            />
+            <TestArea onMessage={_sendMessage.bind(this)}/>
             <img className="demo-monster-img" src={monsterImgUrl} />
             <Footer />
         </div>
-    }
+    )
 }
+
+export default Home;

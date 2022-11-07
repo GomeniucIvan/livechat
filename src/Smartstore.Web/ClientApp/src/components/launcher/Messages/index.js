@@ -5,14 +5,15 @@ import chatIconUrl from './../assets/chat-icon.svg'
 
 
 class Message extends Component {
-
-  _renderMessageOfType(type) {
-    switch(type) {
-      case 'text':
+    _renderMessageOfType(type) {
         return <TextMessage {...this.props.message} />
-      case 'emoji':
-        return <EmojiMessage {...this.props.message} />
-    }
+
+    //switch(type) {
+    //  case 'text':
+        
+    //  case 'emoji':
+    //    return <EmojiMessage {...this.props.message} />
+    //}
   }
 
   render () {

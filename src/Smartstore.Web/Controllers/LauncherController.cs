@@ -37,7 +37,7 @@ namespace Smartstore.Web.Controllers
                 companyGuestCustomerId: headerData.CompanyGuestCompany.Id,
                 companyCustomerId: null).ToList();
 
-            return ApiJson(new GenericApiModel<IList<CompanyMessageDto>>().Success(messages));
+            return ApiJson(new GenericApiModel<IList<CompanyMessageDto>>().Success(messages.ToArray()));
         }
 
         [HttpPost]

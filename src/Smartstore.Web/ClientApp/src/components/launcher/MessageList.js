@@ -7,14 +7,14 @@ class MessageList extends Component {
     this.scrollList.scrollTop = this.scrollList.scrollHeight;
   }
 
-  render () {
-    return (
-      <div className="app-message-list" ref={el => this.scrollList = el}>
-        {this.props.messages.map((message, i) => {
-          return <Message message={message} key={i} />
-        })}
-      </div>)
-  }
+    render() {
+        return (
+            <div className="app-message-list" ref={el => this.scrollList = el}>
+                {this.props.messages.map((message, i) => {
+                    return <Message message={message} key={i} />
+                })}
+            </div>)
+    }
 }
 
 export default MessageList
