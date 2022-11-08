@@ -1,20 +1,24 @@
-import React, { Component } from 'react';
-import Message from './Messages'
+import React, { useEffect, useRef } from 'react';
+import Message from '../launcher/Messages/Message'
 
-class MessageList extends Component {
+const MessageList = (props) => {
+    const scrollRef = useRef(null);
 
-  componentDidUpdate(prevProps, prevState) {
-    this.scrollList.scrollTop = this.scrollList.scrollHeight;
-  }
+    useEffect(() => {
+        setTimeout(() => {
+            if (scrollRef.current) {
+                scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            }
+        }, 50)
+    }, []);
 
-    render() {
-        return (
-            <div className="app-message-list" ref={el => this.scrollList = el}>
-                {this.props.messages.map((message, i) => {
-                    return <Message message={message} key={i} />
-                })}
-            </div>)
-    }
+    return (
+        <div className="app-message-list" ref={scrollRef}>
+            {props.messages.map((message, i) => {
+                return <Message message={message} key={i} />
+            })}
+        </div>
+    )
 }
 
-export default MessageList
+export default MessageList;

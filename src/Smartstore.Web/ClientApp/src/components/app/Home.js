@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import messageHistory from './messageHistory';
 import TestArea from './TestArea';
 import Header from './Header';
 import Footer from './Footer';
 import monsterImgUrl from "./assets/monster.png";
-import { get, postLauncher } from "../utils/HttpClient";
+import { postLauncher } from "../utils/HttpClient";
 import './assets/styles'
 
 const Home = (props) => {
@@ -46,7 +45,7 @@ const Home = (props) => {
         }
     }
 
-    const _handleClick = async () => {
+    const handleClick = async () => {
         setIsOpen(true);
         setNewMessagesCount(0);
     }

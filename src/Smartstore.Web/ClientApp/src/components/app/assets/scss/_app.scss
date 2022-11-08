@@ -75,7 +75,6 @@
             }
         }
 
-
         .conversations-list {
             overflow: hidden;
             flex: 1 1;
@@ -151,6 +150,33 @@
 
         &.with-border-left {
             border-left: 1px solid var(--border-color);
+        }
+        //details
+        .conv-header {
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ebf0f5;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 1.6rem;
+        }
+
+        .conv-body {
+            display: flex;
+            flex: 1 1 1px;
+            flex-direction: column;
+            height: 100%;
+            margin: 0;
+            overflow-y: auto;
+            padding-bottom: 1.6rem;
+            position: relative;
+        }
+
+        .conv-footer {
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
     }
 }

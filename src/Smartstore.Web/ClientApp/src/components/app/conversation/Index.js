@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { KTSVG } from '../../utils/Utils'
 import Translate from '../../utils/Translate'
+import Details from "./Details";
 
 const Index = (props) => {
     const [loading, setLoading] = useState(false);
@@ -53,19 +54,7 @@ const Index = (props) => {
                     </div>
                 </div>
 
-                <div className='conversation-details-wrap'>
-                    <div className='messages-and-sidebar'>
-                        <div>
-                            top
-                        </div>
-                        <div>
-                            body
-                        </div>
-                        <div>
-                            bottom
-                        </div>
-                    </div>
-                </div>
+                {<Details />}
                 <div className='conversation-details-summary'>
 
                 </div>
