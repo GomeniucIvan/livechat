@@ -1,4 +1,4 @@
-import $ from 'jquery'
+import $ from 'jQuery'
 
 //TODO script SETTINGS
 var customerUniqueId = "1";

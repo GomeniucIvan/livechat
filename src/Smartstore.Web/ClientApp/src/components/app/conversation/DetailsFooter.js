@@ -1,31 +1,24 @@
-import { Editor, EditorState } from "draft-js";
-import "draft-js/dist/Draft.css";
-import { useRef, useState } from "react";
+import $ from 'jQuery';
+import { useEffect } from 'react';
+import 'summernote';
+import 'summernote/dist/summernote.css';
 
 const DetailsFooter = (props) => {
-    const [editorState, setEditorState] = useState(() =>
-        EditorState.createEmpty()
-    );
+    useEffect(() => {
+        const $summerNote = $('#reply-conv');
 
-    const editor = useRef(null);
-
-    function focusEditor() {
-        editor.current.focus();
-    }
+        $summerNote.summernote({
+            tooltip: false,
+            disableResizeEditor: true
+        }); 
+        $('.note-statusbar').hide(); 
+    });
 
     return (
         <>
-            <div className='conv-footer'>
-                <div
-                    style={{ border: "1px solid black", minHeight: "6em", cursor: "text" }}
-                    onClick={focusEditor}
-                >
-                    <Editor
-                        ref={editor}
-                        editorState={editorState}
-                        onChange={setEditorState}
-                        placeholder="Write something!"
-                    />
+            <div className='conv-footer position-relative'>
+                <div id='reply-conv'>
+
                 </div>
             </div>
         </>

@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { post } from '../../utils/HttpClient';
-import $ from 'jquery';
+import $ from 'jQuery';
 import { isNullOrEmpty, showAndHide, T } from '../../utils/Utils';
 import Thobber from '../../utils/Thobber';
 
