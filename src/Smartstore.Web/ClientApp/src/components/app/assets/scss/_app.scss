@@ -177,6 +177,12 @@
             display: flex;
             flex-direction: column;
             position: relative;
+
+            .btn-send {
+                right: 14px;
+                bottom: 10px;
+                min-width: 100px;
+            }
         }
     }
 }

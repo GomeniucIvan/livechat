@@ -2,6 +2,8 @@ import $ from 'jQuery';
 import { useEffect } from 'react';
 import 'summernote';
 import 'summernote/dist/summernote.css';
+import Translate from '../../utils/Translate'
+import { equal, isNullOrEmpty } from '../../utils/Utils';
 
 const DetailsFooter = (props) => {
     useEffect(() => {
@@ -9,9 +11,28 @@ const DetailsFooter = (props) => {
 
         $summerNote.summernote({
             tooltip: false,
-            disableResizeEditor: true
+            disableResizeEditor: true,
+            disableDragAndDrop: true,
+            shortcuts: false,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['view', ['fullscreen']],
+            ],
         }); 
         $('.note-statusbar').hide(); 
+
+        $summerNote.on("summernote.change", function (e) {  
+            const enteredCode = $summerNote.summernote('code');
+
+            if (equal('<p><br></p>', enteredCode) || isNullOrEmpty(enteredCode)) {
+                $('.btn-send').addClass('disabled');
+            } else {
+                $('.btn-send').removeClass('disabled');
+            }
+        });
     });
 
     return (
@@ -20,6 +41,7 @@ const DetailsFooter = (props) => {
                 <div id='reply-conv'>
 
                 </div>
+                <button type='button' className='btn btn-primary position-absolute btn-send disabled'><Translate text="Send" /> </button>
             </div>
         </>
     )
