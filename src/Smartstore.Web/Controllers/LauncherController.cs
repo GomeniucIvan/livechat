@@ -1,4 +1,5 @@
-﻿using Smartstore.Core.Companies.Dtos;
+﻿using Microsoft.AspNetCore.SignalR;
+using Smartstore.Core.Companies.Dtos;
 using Smartstore.Core.Companies.Proc;
 using Smartstore.Core.Data;
 using Smartstore.Core.Localization.Routing;
@@ -12,14 +13,17 @@ namespace Smartstore.Web.Controllers
         #region Fields
 
         private readonly SmartDbContext _db;
+        private readonly IHubContext<ChatHub> _hubContext;
 
         #endregion
 
         #region Ctor
 
-        public LauncherController(SmartDbContext db)
+        public LauncherController(SmartDbContext db, 
+            IHubContext<ChatHub> hubContext)
         {
             _db = db;
+            _hubContext = hubContext;
         }
 
         #endregion
@@ -59,6 +63,8 @@ namespace Smartstore.Web.Controllers
                 };
 
                 var responseBool = _db.CompanyMessage_Insert(messageDto);
+
+                await _hubContext.Clients.All.SendAsync($"company_{messageDto.CompanyId}_new_message", messageDto);
 
                 //todo generic proc response, created int
                 return ApiJson(resultModel.Success(messageDto));
