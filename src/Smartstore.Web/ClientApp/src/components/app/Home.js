@@ -26,11 +26,6 @@ const Home = (props) => {
         PopulateComponent();
     });
 
-    const _onMessageWasSent = async (message) => {
-        let messages = [...messageList, message];
-        setNewMessagesCount(messages);
-    }
-
     const _sendMessage = async (text) => {
         if (text.length > 0) {
             const newMessagesCount = isOpen ? newMessagesCount : newMessagesCount + 1
@@ -43,11 +38,6 @@ const Home = (props) => {
                 }]
             })
         }
-    }
-
-    const handleClick = async () => {
-        setIsOpen(true);
-        setNewMessagesCount(0);
     }
 
     return (

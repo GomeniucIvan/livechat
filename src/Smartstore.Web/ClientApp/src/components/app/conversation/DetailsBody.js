@@ -24,21 +24,20 @@ const DetailsBody = (props) => {
         <>
             {messageList.map(message => {
                 return (
-                    <>
-                        <div className={`conv-message ${isNullOrEmpty(message.CompanyCustomerId) ? 'guest-message' : 'customer-message'}`}>
-                            {!isNullOrEmpty(message.CompanyCustomerId) &&
-                                <>
+                    <div key={message.Id} className={`conv-message ${isNullOrEmpty(message.CompanyCustomerId) ? 'guest-message' : 'customer-message'}`}>
+                        {!isNullOrEmpty(message.CompanyCustomerId) &&
+                            <>
                                 <span className='message'>
                                     <span dangerouslySetInnerHTML={{ __html: message.Message }}></span>
                                 </span>
                                 <span className='message-icon'>
                                     <img src={message.IconUrl} />
                                 </span>
-                                </>
-                            }
+                            </>
+                        }
 
-                            {isNullOrEmpty(message.CompanyCustomerId) &&
-                                <>
+                        {isNullOrEmpty(message.CompanyCustomerId) &&
+                            <>
                                 <span className='message-icon'>
                                     <img src={message.IconUrl} />
                                 </span>
@@ -47,11 +46,10 @@ const DetailsBody = (props) => {
                                     <span dangerouslySetInnerHTML={{ __html: message.Message }}></span>
                                 </span>
 
-                                </>
-                            }
-                        </div>
-                    </>
-                    )
+                            </>
+                        }
+                    </div>
+                )
             })}
         </>
     )

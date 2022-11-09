@@ -25,26 +25,11 @@ const LauncherWrapper = (props) => {
         }
     });
 
-    const _onMessageWasSent = async (message) => {
-        //let messages = [...messageList, message];
-        //setNewMessagesCount(messages);
+    const onMessageWasSent = async (message) => {
+        setMessageList([...messageList, message])
     }
 
-    const _sendMessage = async (text) => {
-        if (text.length > 0) {
-            const newMessagesCount = isOpen ? newMessagesCount : newMessagesCount + 1;
-            setNewMessagesCount(newMessagesCount);
-
-            //let messages = [...messageList, {
-            //    author: 'them',
-            //    type: 'text',
-            //    data: { text }
-            //}];
-            //(messages)
-        }
-    }
-
-    const _handleClick = async () => {
+    const handleIconClick = async () => {
         setIsOpen(true);
         setNewMessagesCount(0);
     }
@@ -56,10 +41,10 @@ const LauncherWrapper = (props) => {
                     teamName: 'react-live-chat',
                     imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
                 }}
-                onMessageWasSent={_onMessageWasSent.bind(this)}
+                onMessageWasSent={onMessageWasSent.bind(this)}
                 messageList={messageList}
                 newMessagesCount={newMessagesCount}
-                handleClick={_handleClick.bind(this)}
+                handleClick={handleIconClick.bind(this)}
                 isOpen={isOpen}
             />
         </div>

@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MessageList from './MessageList'
 import UserInput from './UserInput'
 import Header from './Header'
+import { Loading } from './../utils/Loading'
 
 const ChatWindow = (props) => {
-    const onMessageReceived = async (message) => {
-        //messages: [...this.state.messages, message]
-    }
-
     const onUserInputSubmit = async (message) => {
         props.onUserInputSubmit(message);
     }
@@ -25,10 +22,15 @@ const ChatWindow = (props) => {
                 imageUrl={props.agentProfile.imageUrl}
                 onClose={props.onClose}
             />
-            <MessageList
-                messages={messageList}
-                imageUrl={props.agentProfile.imageUrl}
-            />
+            {props.isOpen &&
+                <MessageList
+                    messages={messageList}
+                    imageUrl={props.agentProfile.imageUrl}
+                />
+            }
+            {!props.isOpen &&
+                <Loading />
+            }
             <UserInput onSubmit={onUserInputSubmit.bind(this)} />
         </div>
     );

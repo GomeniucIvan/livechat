@@ -44,21 +44,24 @@ namespace Smartstore.Web.Controllers
         [LocalizedRoute("/api/launcher/sendText")]
         public async Task<IActionResult> SendText([FromBody]LauncherMessageModel model)
         {
-            var resultModel = new GenericApiModel<int?>();
-            if (model != null && !string.IsNullOrEmpty(model.Author))
+            var resultModel = new GenericApiModel<CompanyMessageDto>();
+            if (model != null)
             {
                 var headerData = LauncherHeaderData();
 
-                var responseBool = _db.CompanyMessage_Insert(new CompanyMessageDto()
+                var messageDto = new CompanyMessageDto()
                 {
                     Message = model.Message,
                     CompanyGuestCustomerId = headerData.CompanyGuestCompany.Id,
                     CompanyCustomerId = null,
-                    CompanyId = headerData.Company.Id
-                });
+                    CompanyId = headerData.Company.Id,
+                    Sent = true
+                };
+
+                var responseBool = _db.CompanyMessage_Insert(messageDto);
 
                 //todo generic proc response, created int
-                return ApiJson(resultModel.Success(null));
+                return ApiJson(resultModel.Success(messageDto));
             }
 
             resultModel.IsValid = false;

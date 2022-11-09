@@ -23,8 +23,8 @@ const UserInput = (props) => {
             const result = await postLauncher('/api/launcher/sendText', model);
 
             if (result.IsValid) {
-                props.onSubmit(model);
-                userInputRef.current.innerHTML = '';
+                props.onSubmit(result.Data);
+                userInputRef.current.innerHTML = '';               
             }
         }
     }
