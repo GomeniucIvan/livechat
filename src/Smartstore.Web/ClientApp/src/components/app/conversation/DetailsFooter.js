@@ -2,12 +2,15 @@ import $ from 'jQuery';
 import { useEffect } from 'react';
 import 'summernote';
 import 'summernote/dist/summernote.css';
+import { postLauncher } from '../../utils/HttpClient';
 import Translate from '../../utils/Translate'
 import { equal, isNullOrEmpty } from '../../utils/Utils';
 
 const DetailsFooter = (props) => {
+    let $summerNote = null;
+
     useEffect(() => {
-        const $summerNote = $('#reply-conv');
+        $summerNote = $('#reply-conv');
 
         $summerNote.summernote({
             tooltip: false,
@@ -35,13 +38,26 @@ const DetailsFooter = (props) => {
         });
     });
 
+    const sendMessage = async () => {
+        const enteredCode = $summerNote.summernote('code');
+        const model = {
+            Message: enteredCode
+        };
+
+        const result = await postLauncher('/api/sendText', model);
+        if (result.IsValid) {
+            $summerNote.summernote('reset');
+            //$('.btn-send').addClass('disabled');
+        }
+    }
+
     return (
         <>
             <div className='conv-footer position-relative'>
                 <div id='reply-conv'>
 
                 </div>
-                <button type='button' className='btn btn-primary position-absolute btn-send disabled'><Translate text="Send" /> </button>
+                <button type='button' onClick={sendMessage} className='btn btn-primary position-absolute btn-send disabled'><Translate text="Send" /> </button>
             </div>
         </>
     )

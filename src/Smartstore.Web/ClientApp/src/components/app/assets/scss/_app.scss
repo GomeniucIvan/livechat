@@ -171,6 +171,16 @@
             overflow-y: auto;
             padding-bottom: 1.6rem;
             position: relative;
+            margin: 10px;
+
+            .conv-message {
+                display: flex;
+                margin: 0 0 0.2rem;
+
+                &.customer-message {
+                    justify-content: flex-end;
+                }
+            }
         }
 
         .conv-footer {

@@ -10,16 +10,19 @@ namespace Smartstore.Core.Companies.Proc
         public static IList<CompanyMessageDto> CompanyMessage_GetList(this SmartDbContext db,
             int companyId,
             int? companyGuestCustomerId,
-            int? companyCustomerId)
+            int? companyCustomerId,
+            bool guestCall = false)
         {
             var pCompanyIdDbParameter = db.DataProvider.CreateIntParameter("CompanyId", companyId);
             var pCompanyGuestCustomerIdDbParameter = db.DataProvider.CreateIntParameter("CompanyGuestCustomerId", companyGuestCustomerId);
             var pCompanyCustomerIdDbParameter = db.DataProvider.CreateIntParameter("CompanyCustomerId", companyCustomerId);
+            var pGuestCallDbParameter = db.DataProvider.CreateBooleanParameter("GuestCall", guestCall);
 
             return db.ExecStoreProcedure<CompanyMessageDto>($"{nameof(CompanyMessage)}_GetList",
                 pCompanyIdDbParameter,
                 pCompanyGuestCustomerIdDbParameter,
-                pCompanyCustomerIdDbParameter).ToList();
+                pCompanyCustomerIdDbParameter,
+                pGuestCallDbParameter).ToList();
         }
 
         public static bool CompanyMessage_Insert(this SmartDbContext db,

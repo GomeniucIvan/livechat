@@ -6,7 +6,9 @@ const Details = (props) => {
     return (
         <div className='conversation-details-wrap'>
             {<DetailsHeader />}
-            {<DetailsBody />}
+            <div className='conv-body'>
+                {<DetailsBody />}
+            </div>
             {<DetailsFooter />}
         </div>
     )

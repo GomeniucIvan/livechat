@@ -2,12 +2,12 @@
 using Smartstore.Core.Companies.Proc;
 using Smartstore.Core.Data;
 using Smartstore.Core.Localization.Routing;
-using Smartstore.Web.Models.Laucher;
+using Smartstore.Web.Models.Conversation;
 using Smartstore.Web.Models.System;
 
 namespace Smartstore.Web.Controllers
 {
-    public class LauncherController : ApiPublicController
+    public class ConversationController : ApiPublicController
     {
         #region Fields
 
@@ -17,44 +17,40 @@ namespace Smartstore.Web.Controllers
 
         #region Ctor
 
-        public LauncherController(SmartDbContext db)
+        public ConversationController(SmartDbContext db)
         {
             _db = db;
         }
 
         #endregion
 
-        #region Methods
+        #region MyRegion
 
         [HttpPost]
-        [LocalizedRoute("/api/launcher/messages")]
+        [LocalizedRoute("/api/messages")]
         public async Task<IActionResult> Messages()
         {
-            var headerData = LauncherHeaderData();
-
-            IList<CompanyMessageDto> messages = _db.CompanyMessage_GetList(companyId: headerData.Company.Id,
-                companyGuestCustomerId: headerData.CompanyGuestCompany.Id,
-                companyCustomerId: null,
-                guestCall: true).ToList();
+            // todo change
+            IList<CompanyMessageDto> messages = _db.CompanyMessage_GetList(companyId: 1,
+                companyGuestCustomerId: 1,
+                companyCustomerId: 1).ToList();
 
             return ApiJson(new GenericApiModel<IList<CompanyMessageDto>>().Success(messages.ToArray()));
         }
 
         [HttpPost]
-        [LocalizedRoute("/api/launcher/sendText")]
-        public async Task<IActionResult> SendText([FromBody]LauncherMessageModel model)
+        [LocalizedRoute("/api/sendText")]
+        public async Task<IActionResult> SendText([FromBody]MessageModel model)
         {
             var resultModel = new GenericApiModel<int?>();
-            if (model != null && !string.IsNullOrEmpty(model.Author))
+            if (model != null)
             {
-                var headerData = LauncherHeaderData();
-
                 var responseBool = _db.CompanyMessage_Insert(new CompanyMessageDto()
                 {
                     Message = model.Message,
-                    CompanyGuestCustomerId = headerData.CompanyGuestCompany.Id,
-                    CompanyCustomerId = null,
-                    CompanyId = headerData.Company.Id
+                    CompanyGuestCustomerId = 1,
+                    CompanyCustomerId = 1,
+                    CompanyId = 1
                 });
 
                 //todo generic proc response, created int

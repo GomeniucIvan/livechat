@@ -91,22 +91,25 @@ END;
 GO
 
 CREATE PROCEDURE [dbo].[CompanyMessage_GetList]
-     (
-    @CompanyId int, 
-	@CompanyGuestCustomerId int, 
-	@CompanyCustomerId int)
+    (
+    @CompanyId INT,
+	@CompanyGuestCustomerId INT,
+	@CompanyCustomerId INT,
+	@GuestCall BIT)
 AS
 BEGIN
-    SELECT cm.Id, 
-		   cm.Message, 
-		   cm.CompanyCustomerId, 
-		   cm.CompanyGuestCustomerId,
-		   cm.CompanyId, 
-		   cm.CreatedOnUtc
+    SELECT cm.Id,
+           cm.Message,
+           cm.CompanyCustomerId,
+           cm.CompanyGuestCustomerId,
+           cm.CompanyId,
+           cm.CreatedOnUtc,
+           CASE WHEN ISNULL(cm.CompanyCustomerId, '') = '' AND @GuestCall = 1 THEN
+                    CAST(1 AS BIT)
+           ELSE CAST(0 AS BIT)END AS Sent
 
     FROM   dbo.CompanyMessage cm WITH(NOLOCK)
-    WHERE  (ISNULL(cm.CompanyCustomerId, 0) = 0 OR cm.CompanyCustomerId = @CompanyCustomerId)
-           AND (ISNULL(cm.CompanyGuestCustomerId, 0) = 0 OR cm.CompanyGuestCustomerId = @CompanyGuestCustomerId)
+    WHERE  (ISNULL(cm.CompanyGuestCustomerId, 0) = 0 OR cm.CompanyGuestCustomerId = @CompanyGuestCustomerId)
+           --AND (ISNULL(cm.CompanyCustomerId, 0) = 0 OR cm.CompanyCustomerId = @CompanyCustomerId)
            AND cm.CompanyId = @CompanyId;
 END;
-GO
