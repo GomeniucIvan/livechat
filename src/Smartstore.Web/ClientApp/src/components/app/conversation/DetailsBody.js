@@ -1,50 +1,75 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { postLauncher } from "../../utils/HttpClient";
 import { isNullOrEmpty } from "../../utils/Utils";
-import { HubConnectionBuilder } from '@microsoft/signalr';
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { Loading } from "../../utils/Loading";
+
+let messageArrayList = []; //todo ?! setMessageList reload component!!
 
 const DetailsBody = (props) => {
-    const [connection, setConnection] = useState(null);
     let [messageList, setMessageList] = useState([]);
     let [loading, setLoading] = useState(true);
+    const scrollRef = useRef(null);
 
     useEffect(() => {
-        const newConnection = new HubConnectionBuilder()
+        const connection = new HubConnectionBuilder()
             .withUrl("/chatHub")
-            //.configureLogging(signalR.LogLevel.None)
+            .withAutomaticReconnect()
+            .configureLogging(LogLevel.Debug)
             .build();
 
-        setConnection(newConnection);
+        connection.start().catch(function (err) {
+            console.log('Hub Error' + err);
+        });
+
+        connection.on(`company_1_new_message`, function (message) {
+            const incMessage = {
+                Id: message.id,
+                CompanyCustomerId: message.companyCustomerId,
+                CompanyGuestCustomerId: message.companyGuestCustomerId,
+                CompanyId: message.companyId,
+                CreatedOnUtc: message.createdOnUtc,
+                IconUrl: message.iconUrl,
+                Message: message.message,
+                Sent: message.sent
+            }
+
+            setMessageList([...messageArrayList, incMessage]);
+            messageArrayList = messageList;
+
+            setTimeout(() => {
+                if (scrollRef.current) {
+                    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+                }
+            }, 50);
+        });
 
         const PopulateComponent = async () => {
             let response = await postLauncher(`/api/messages`);
 
             if (response && response.IsValid) {
                 setMessageList(response.Data);
+                messageArrayList = response.Data;
             }
 
             setLoading(false);
+
+            setTimeout(() => {
+                if (scrollRef.current) {
+                    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+                }
+            }, 500);
         }
 
         PopulateComponent();
     }, []);
 
-    useEffect(() => {
-        if (connection) {
-            console.log(connection)
-
-            connection.start().then(result => {
-                    console.log('Connected!');
-
-                    connection.on('company_1_new_message', message => {
-                        console.log(message)
-                    });
-            }).catch(e => console.log('Connection failed: ', e));
-        }
-    }, [connection]);
+    if (loading) {
+        return <Loading />
+    }
 
     return (
-        <>
+        <div className='conv-body' ref={scrollRef}>
             {messageList.map(message => {
                 return (
                     <div key={message.Id} className={`conv-message ${isNullOrEmpty(message.CompanyCustomerId) ? 'guest-message' : 'customer-message'}`}>
@@ -74,7 +99,7 @@ const DetailsBody = (props) => {
                     </div>
                 )
             })}
-        </>
+        </div>
     )
 }
 

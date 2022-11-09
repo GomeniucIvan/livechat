@@ -87,6 +87,8 @@ BEGIN
           @CompanyGuestCustomerId,  -- CompanyGuestCustomerId - int
           @CompanyId,               -- CompanyId - int
           GETUTCDATE())             -- CreatedOnUTc - datetime
+
+     SELECT SCOPE_IDENTITY();
 END;
 GO
 

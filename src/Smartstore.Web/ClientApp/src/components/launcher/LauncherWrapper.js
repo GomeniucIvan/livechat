@@ -26,7 +26,7 @@ const LauncherWrapper = (props) => {
     });
 
     const onMessageWasSent = async (message) => {
-        setMessageList([...messageList, message])
+        setMessageList([...messageList, message]);
     }
 
     const handleIconClick = async () => {

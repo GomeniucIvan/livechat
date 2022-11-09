@@ -62,9 +62,12 @@ namespace Smartstore.Web.Controllers
                     Sent = true
                 };
 
-                var responseBool = _db.CompanyMessage_Insert(messageDto);
-
-                await _hubContext.Clients.All.SendAsync($"company_{messageDto.CompanyId}_new_message", messageDto);
+                var companyMessageId = _db.CompanyMessage_Insert(messageDto);
+                if (companyMessageId.HasValue)
+                {
+                    messageDto.Id = companyMessageId.GetValueOrDefault();
+                    await _hubContext.Clients.All.SendAsync($"company_{messageDto.CompanyId}_new_message", messageDto);
+                }
 
                 //todo generic proc response, created int
                 return ApiJson(resultModel.Success(messageDto));

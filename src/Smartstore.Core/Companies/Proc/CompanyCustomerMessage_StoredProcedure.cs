@@ -25,7 +25,7 @@ namespace Smartstore.Core.Companies.Proc
                 pGuestCallDbParameter).ToList();
         }
 
-        public static bool CompanyMessage_Insert(this SmartDbContext db,
+        public static int? CompanyMessage_Insert(this SmartDbContext db,
             CompanyMessageDto model)
         {
             var pCompanyIdDbParameter = db.DataProvider.CreateIntParameter("CompanyId", model.CompanyId);
@@ -33,7 +33,7 @@ namespace Smartstore.Core.Companies.Proc
             var pCompanyGuestCustomerIdDbParameter = db.DataProvider.CreateIntParameter("CompanyGuestCustomerId", model.CompanyGuestCustomerId);
             var pMessageDbParameter = db.DataProvider.CreateParameter("Message", model.Message);
 
-            return db.ExecStoreProcedure<bool>($"{nameof(CompanyMessage)}_Insert",
+            return db.ExecStoreProcedure<int?>($"{nameof(CompanyMessage)}_Insert",
                 pCompanyIdDbParameter,
                 pCompanyCustomerIdDbParameter,
                 pCompanyGuestCustomerIdDbParameter,

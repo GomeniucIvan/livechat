@@ -23,7 +23,8 @@ namespace Smartstore.Web.Infrastructure
         {
             services.AddSignalR();
 
-            //services.AddCors(o => {
+            //services.AddCors(o =>
+            //{
             //    o.AddPolicy("Limited", builder => builder
             //        .AllowAnyOrigin()
             //        .AllowAnyMethod()
