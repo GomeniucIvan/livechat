@@ -9,7 +9,7 @@
     "clsx": "^1.2.1",
     "formik": "^2.2.9",
     "http-proxy-middleware": "^2.0.6",
-    "jQuery": "^3.6.1",
+    "jquery": "^3.6.1",
     "merge": "^2.1.1",
     "node-sass": "^7.0.3",
     "oidc-client": "^1.11.5",
