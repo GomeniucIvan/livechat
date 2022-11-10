@@ -6,6 +6,17 @@ import Details from "./Details";
 const Index = (props) => {
     const [loading, setLoading] = useState(false);
 
+    const companyGuestCustomer = {
+        Id: 1,
+        FirstName: 'test',
+        LastName: 'last',
+        FullName: 'test last',
+        Description: 'Company',
+        LastMessage: 'Last message',
+        LastMessageIncomeTimeAgoDisplay: '3h',
+        CompanyId: 1
+    }
+
     return (
         <>
             <section className='conversation-page'>
@@ -32,14 +43,14 @@ const Index = (props) => {
                                 <span className='current-user-details'>
                                     <span>
                                         <div className='current-user-initials'>
-                                            Full Name
+                                            {companyGuestCustomer.FullName}
                                         </div>
                                         <div className='current-user-description'>
-                                            Company
+                                            {companyGuestCustomer.Description}
                                         </div>
                                     </span>
                                     <span>
-                                        3h
+                                        {companyGuestCustomer.LastMessageIncomeTimeAgoDisplay}
                                     </span>
                                 </span>
                             </div>
@@ -48,13 +59,14 @@ const Index = (props) => {
 
                             </div>
                             <div className='sent-text'>
-                                Hello
+                                {companyGuestCustomer.LastMessage}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {<Details />}
+                {<Details companyGuestCustomer={companyGuestCustomer} />}
+
                 <div className='conversation-details-summary'>
 
                 </div>

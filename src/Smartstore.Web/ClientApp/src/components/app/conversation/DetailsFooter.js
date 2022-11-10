@@ -35,8 +35,18 @@ const DetailsFooter = (props) => {
             } else {
                 $('.btn-send').removeClass('disabled');
             }
+
+            customerTyping();
         });
     });
+
+    const customerTyping = async () => {
+        const model = {
+            CompanyGuestCustomerId: props.companyGuestCustomer.Id,
+        }
+
+        const result = await postLauncher('/api/typing', model);
+    }
 
     const sendMessage = async () => {
         const enteredCode = $summerNote.summernote('code');

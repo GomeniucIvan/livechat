@@ -23,7 +23,7 @@ const LauncherWrapper = (props) => {
             console.log('Hub Error' + err);
         });
 
-        connection.on(`guest_1_new_message`, function (message) {
+        connection.on(`guest_1_1_new_message`, function (message) {
             //const incMessage = {
             //    Id: message.id,
             //    CompanyCustomerId: message.companyCustomerId,
@@ -39,6 +39,10 @@ const LauncherWrapper = (props) => {
             //messageArrayList = messageList;
 
             PopulateComponent();
+        });
+
+        connection.on(`company_1_1_typing`, function (message) {
+
         });
 
         const PopulateComponent = async () => {

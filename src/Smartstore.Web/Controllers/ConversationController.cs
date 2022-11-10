@@ -63,7 +63,7 @@ namespace Smartstore.Web.Controllers
                 if (companyMessageId.HasValue)
                 {
                     messageDto.Id = companyMessageId.GetValueOrDefault();
-                    await _hubContext.Clients.All.SendAsync($"guest_{messageDto.CompanyId}_new_message", messageDto);
+                    await _hubContext.Clients.All.SendAsync($"guest_{messageDto.CompanyId}_{messageDto.CompanyGuestCustomerId}_new_message", messageDto);
                     await _hubContext.Clients.All.SendAsync($"company_{messageDto.CompanyId}_new_message", messageDto);
                     //todo generic proc response, created int
                     return ApiJson(resultModel.Success(messageDto));
@@ -73,7 +73,14 @@ namespace Smartstore.Web.Controllers
 
             resultModel.IsValid = false;
             return ApiJson(resultModel.Error());
-        } 
+        }
+
+        [HttpPost]
+        [LocalizedRoute("/api/typing")]
+        public async Task Typing([FromBody] TypingModel model)
+        {
+            await _hubContext.Clients.All.SendAsync($"company_{1}_{model.CompanyGuestCustomerId}_typing");
+        }
 
         #endregion
     }
