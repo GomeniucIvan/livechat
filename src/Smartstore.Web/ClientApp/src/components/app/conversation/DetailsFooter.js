@@ -46,8 +46,12 @@ const DetailsFooter = (props) => {
 
         const result = await postLauncher('/api/sendText', model);
         if (result.IsValid) {
-            $summerNote.summernote('reset');
-            //$('.btn-send').addClass('disabled');
+            try {
+                //TypeError: $dialog.modal is not a function
+                $summerNote.summernote('reset');
+            } catch (e) {
+
+            }
         }
     }
 

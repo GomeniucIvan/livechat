@@ -5,8 +5,8 @@ import Header from './Header'
 import { Loading } from './../utils/Loading'
 
 const ChatWindow = (props) => {
-    const onUserInputSubmit = async (message) => {
-        props.onUserInputSubmit(message);
+    const onGuestSendMessage = async (message) => {
+        props.onGuestSendMessage(message);
     }
 
     let messageList = props.messageList || [];
@@ -24,6 +24,7 @@ const ChatWindow = (props) => {
             />
             {props.isOpen &&
                 <MessageList
+                    msgListScrollRef={props.msgListScrollRef}
                     messages={messageList}
                     imageUrl={props.agentProfile.imageUrl}
                 />
@@ -31,7 +32,7 @@ const ChatWindow = (props) => {
             {!props.isOpen &&
                 <Loading />
             }
-            <UserInput onSubmit={onUserInputSubmit.bind(this)} />
+            <UserInput onSubmit={onGuestSendMessage.bind(this)} />
         </div>
     );
 }

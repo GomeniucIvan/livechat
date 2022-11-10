@@ -6,33 +6,27 @@ import launcherIconActive from './assets/close-icon.png';
 import './assets/scss/launcher.scss';
 
 const Launcher = (props) => {
-    let [isOpen, setIsOpen] = useState(false);
-    let [loading, setLoading] = useState(true);
-
-    const handleClick = async () => {
-        setIsOpen(!isOpen);
-    }
-
     const classList = [
         'app-launcher',
-        (isOpen ? 'opened' : ''),
+        (props.isOpen ? 'opened' : ''),
     ];
 
     return (
         <div>
             <div>
             </div>
-            <div className={classList.join(' ')} onClick={handleClick.bind(this)}>
-                <MessageCount count={props.newMessagesCount} isOpen={isOpen} />
+            <div className={classList.join(' ')} onClick={props.handleClick.bind(this)}>
+                <MessageCount count={props.newMessagesCount} isOpen={props.isOpen} />
                 <img className={"app-open-icon"} src={launcherIconActive} />
                 <img className={"app-closed-icon"} src={launcherIcon} />
             </div>
             <ChatWindow
+                msgListScrollRef={props.msgListScrollRef}
                 messageList={props.messageList}
-                onUserInputSubmit={props.onMessageWasSent}
+                onGuestSendMessage={props.onGuestSendMessage}
                 agentProfile={props.agentProfile}
-                isOpen={isOpen}
-                onClose={handleClick.bind(this)}
+                isOpen={props.isOpen}
+                onClose={props.handleClick.bind(this)}
             />
         </div>
     );
@@ -49,7 +43,7 @@ const MessageCount = (props) => {
 
 Launcher.propTypes = {
   onMessageWasReceived: PropTypes.func,
-  onMessageWasSent: PropTypes.func,
+  onGuestSendMessage: PropTypes.func,
   newMessagesCount: PropTypes.number,
   isOpen: PropTypes.bool,
   handleClick: PropTypes.func,

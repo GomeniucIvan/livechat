@@ -1,4 +1,5 @@
-﻿using Smartstore.Core.Companies.Dtos;
+﻿using Microsoft.AspNetCore.SignalR;
+using Smartstore.Core.Companies.Dtos;
 using Smartstore.Core.Companies.Proc;
 using Smartstore.Core.Data;
 using Smartstore.Core.Localization.Routing;
@@ -12,14 +13,17 @@ namespace Smartstore.Web.Controllers
         #region Fields
 
         private readonly SmartDbContext _db;
+        private readonly IHubContext<ChatHub> _hubContext;
 
         #endregion
 
         #region Ctor
 
-        public ConversationController(SmartDbContext db)
+        public ConversationController(SmartDbContext db, 
+            IHubContext<ChatHub> hubContext)
         {
             _db = db;
+            _hubContext = hubContext;
         }
 
         #endregion
@@ -42,19 +46,29 @@ namespace Smartstore.Web.Controllers
         [LocalizedRoute("/api/sendText")]
         public async Task<IActionResult> SendText([FromBody]MessageModel model)
         {
-            var resultModel = new GenericApiModel<int?>();
+            var resultModel = new GenericApiModel<CompanyMessageDto>();
             if (model != null)
             {
-                var responseBool = _db.CompanyMessage_Insert(new CompanyMessageDto()
+                var messageDto = new CompanyMessageDto()
                 {
                     Message = model.Message,
                     CompanyGuestCustomerId = 1,
                     CompanyCustomerId = 1,
-                    CompanyId = 1
-                });
+                    CompanyId = 1,
+                    Sent = false
+                };
 
-                //todo generic proc response, created int
-                return ApiJson(resultModel.Success(null));
+                var companyMessageId = _db.CompanyMessage_Insert(messageDto);
+
+                if (companyMessageId.HasValue)
+                {
+                    messageDto.Id = companyMessageId.GetValueOrDefault();
+                    await _hubContext.Clients.All.SendAsync($"guest_{messageDto.CompanyId}_new_message", messageDto);
+                    await _hubContext.Clients.All.SendAsync($"company_{messageDto.CompanyId}_new_message", messageDto);
+                    //todo generic proc response, created int
+                    return ApiJson(resultModel.Success(messageDto));
+                }
+
             }
 
             resultModel.IsValid = false;
