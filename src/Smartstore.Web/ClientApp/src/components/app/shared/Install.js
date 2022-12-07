@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { post } from '../../utils/HttpClient';
 import $ from 'jquery';
-import { isNullOrEmpty, showAndHide, T } from '../../utils/Utils';
+import { equal, isNullOrEmpty, showAndHide, T } from '../../utils/Utils';
 import Thobber from '../../utils/Thobber';
 
 //todo Yup -> T
@@ -59,17 +59,22 @@ const Install = () => {
             if (result) {
                 if (result.Completed) {
                     window.clearInterval(progressIntervall);
-                    $("#install-progress").html(T('Public.Install.Restart'));
+                    $("#install-progress").html(T('Install.Restart'));
 
-                    //todo
-                    //await post('/api/finalize?restart=' + result.Success);
-                    //window.location.reload();
+                    if (equal(result.ProgressMessage, 'Progress.Finalizing')) {
+                        await post('/api/finalize?restart=' + result.Success);
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1000);
+                        $("#install-progress").html(T('Install.Restartarting'));
+                    }
+
                 } else if (!isNullOrEmpty(result.ProgressMessage)) {
                     $("#install-progress").html(result.ProgressMessage);
                 }
             }
         } catch (e) {
-            $("#install-progress").html(T('Public.Install.Restart'));
+            $("#install-progress").html(T('Install.Restart'));
         }
     }
 
@@ -104,7 +109,7 @@ const Install = () => {
                 var result = await post('/api/install', postModel);
                 $('body').addClass('overflow-hidden');
                 if (result.Success) {
-                    $("#install-progress").html(T('Public.Install.Restart'));
+                    $("#install-progress").html(T('Install.Restart'));
                     $('.spinner').remove();
                 } else {
                     setShowThobber(false);
@@ -154,9 +159,9 @@ const Install = () => {
                         <div className="collapse navbar-collapse ml-auto">
                             <ul className="navbar-nav ml-auto">
                                 <li className="nav-item">
-                                    <button type='button' className="nav-link navbar-tool" title="Restart Installation" rel="nofollow">
+                                    <a type='button' className="nav-link navbar-tool" title={T("Install.RestartInstallation")} rel="nofollow">
                                         <i className="bi bi-arrow-clockwise navbar-icon"></i>
-                                    </button>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -547,7 +552,7 @@ const Install = () => {
                 </div>
             </div>
 
-            <Thobber show={showThobber} large="true" flex="true" text={T('Public.Install.Header')} />
+            <Thobber show={showThobber} large="true" flex="true" text={T('Install.Header')} />
             
             </>
     )

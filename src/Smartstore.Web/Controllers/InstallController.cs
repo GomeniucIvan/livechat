@@ -29,11 +29,6 @@ namespace Smartstore.Web.Controllers
             return _installService.GetResource(resourceName);
         }
 
-        public IActionResult Index()
-        {
-            return Content("");
-        }
-
         [LocalizedRoute("/api/install")]
         public async Task<IActionResult> Install(bool noAutoInstall = false)
         {
