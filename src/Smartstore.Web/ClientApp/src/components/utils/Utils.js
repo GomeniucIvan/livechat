@@ -1,4 +1,4 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 import { useEffect, useRef } from "react";
 import React from 'react'
 import lang from './Translate.Languages';
