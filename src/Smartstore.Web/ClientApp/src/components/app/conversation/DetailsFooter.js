@@ -1,10 +1,12 @@
-import $ from 'jQuery';
+import $ from 'jquery';
 import { useEffect } from 'react';
 import 'summernote';
 import 'summernote/dist/summernote.css';
 import { postLauncher } from '../../utils/HttpClient';
 import Translate from '../../utils/Translate'
 import { equal, isNullOrEmpty } from '../../utils/Utils';
+
+
 
 const DetailsFooter = (props) => {
     let $summerNote = null;

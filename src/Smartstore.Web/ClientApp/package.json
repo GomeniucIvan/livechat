@@ -27,7 +27,7 @@
     "redux-thunk": "^2.4.2",
     "rimraf": "^3.0.2",
     "sass": "^1.56.1",
-    "summernote": "^0.8.20",
+    "summernote": "0.8.18",
     "web-vitals": "^3.0.2",
     "workbox-background-sync": "^6.5.4",
     "workbox-broadcast-update": "^6.5.4",
